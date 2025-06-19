@@ -5,7 +5,12 @@ const app = express();
 // Serve all static files from the root folder
 app.use(express.static(__dirname));
 
-// For SPA support
+// Homepage route to show backend is running
+app.get('/', (req, res) => {
+  res.send('CrisisChain-ZK Backend is Running 🚀');
+});
+
+// For SPA support (catch all other routes)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
