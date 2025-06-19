@@ -1,26 +1,76 @@
-// pages/index.js
-import Head from 'next/head';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CrisisChain-ZK</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdf2f8;
+      padding: 20px;
+      text-align: center;
+    }
 
-export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>CrisisChain-ZK</title>
-      </Head>
-      <main>
-        <h1>🚨 CrisisChain-ZK</h1>
-        <p>Secure, transparent aid distribution powered by ZK & Cardano.</p>
+    h1 {
+      color: #d6336c;
+    }
 
-        <form>
-          <input type="text" placeholder="Enter your identity..." />
-          <button type="submit">Register Identity</button>
-        </form>
+    form {
+      margin: 20px auto;
+      max-width: 400px;
+    }
 
-        <form>
-          <input type="text" placeholder="Enter proof..." />
-          <button type="submit">Verify Proof</button>
-        </form>
-      </main>
-    </>
-  );
-}
+    input {
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #d6336c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ad2558;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚨 CrisisChain-ZK</h1>
+  <p>Secure, transparent aid distribution powered by ZK & Cardano</p>
+
+  <form id="register-form">
+    <input type="text" id="identity" placeholder="Enter your identity..." required />
+    <button type="submit">Register Identity</button>
+  </form>
+
+  <form id="verify-form">
+    <input type="text" id="proof" placeholder="Enter your ZK proof..." required />
+    <button type="submit">Verify Proof</button>
+  </form>
+
+  <script>
+    document.getElementById('register-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const id = document.getElementById('identity').value;
+      alert('✅ Identity registered: ' + id);
+      // Later, send to backend
+    });
+
+    document.getElementById('verify-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const proof = document.getElementById('proof').value;
+      alert('✅ Proof verified: ' + proof);
+      // Later, send to backend
+    });
+  </script>
+</body>
+</html>
