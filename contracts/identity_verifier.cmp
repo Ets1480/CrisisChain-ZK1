@@ -4,18 +4,29 @@ contract IdentityVerifier {
     known_hashes: map<field, bool>;
 
   constructor() {
-    owner = caller();
-    known_hashes[hash("refugee001")] = true;
+    owner = caller();  // Save the deployer's wallet address
+    // You can pre-register any hash you want here (optional)
+    known_hashes[hash(field("refugee001"))] = true;
   }
 
   public function register_identity(user_id: field) {
+    // Restrict this function to only the contract deployer
     require(caller() == owner, "Unauthorized");
     let hash_id = hash(user_id);
     known_hashes[hash_id] = true;
   }
 
   public function verify_proof(public_hash: field, zk_proof: zkproof) -> bool {
-    require(verify_proof(zk_proof, public_hash), "Invalid proof");
+    // FIXED: Prevent infinite recursion by calling real ZK verifier function
+    require(verify_identity_proof(zk_proof, public_hash), "Invalid proof");
     return known_hashes[public_hash];
+  }
+
+  public function get_owner() -> address {
+    return owner;
+  }
+
+  public function is_known(hash_val: field) -> bool {
+    return known_hashes[hash_val];
   }
 }
