@@ -1,55 +1,134 @@
-<script>
-  const walletAddressEl = document.getElementById('wallet-address');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CrisisChain-ZK</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdf2f8;
+      padding: 20px;
+      text-align: center;
+    }
 
-  // Helper: check if wallet key exists in window.cardano
-  function detectWallet(walletName) {
-    return window.cardano && window.cardano[walletName];
-  }
+    h1 {
+      color: #d6336c;
+    }
 
-  // Detect available Cardano wallets
-  function getAvailableWallets() {
-    if (!window.cardano) return [];
-    return Object.keys(window.cardano).filter(key => {
-      // Wallet keys are objects with 'enable' function
-      return typeof window.cardano[key]?.enable === 'function';
+    form {
+      margin: 20px auto;
+      max-width: 400px;
+    }
+
+    input {
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #d6336c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ad2558;
+    }
+
+    #wallet-address {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🚨 CrisisChain-ZK</h1>
+  <p>Secure, transparent aid distribution powered by ZK & Cardano</p>
+
+  <!-- 🔗 Wallet Connections -->
+  <button id="connect-lace-btn">🔗 Connect Lace Wallet</button>
+  <button id="connect-vespr-btn">🔗 Connect VESPR Wallet</button>
+  <p id="wallet-address"></p>
+
+  <!-- 🧾 Identity Registration Form -->
+  <form id="register-form">
+    <input type="text" id="identity" placeholder="Enter your identity..." required />
+    <button type="submit">Register Identity</button>
+  </form>
+
+  <!-- 🛡️ Proof Verification Form -->
+  <form id="verify-form">
+    <input type="text" id="proof" placeholder="Enter your ZK proof..." required />
+    <button type="submit">Verify Proof</button>
+  </form>
+
+  <script>
+    const walletAddressEl = document.getElementById('wallet-address');
+
+    // 🔗 Connect Lace Wallet
+    document.getElementById('connect-lace-btn').addEventListener('click', async () => {
+      if (window.cardano && window.cardano.lace) {
+        try {
+          const api = await window.cardano.lace.enable();
+          const addresses = await api.getUsedAddresses();
+          walletAddressEl.textContent = '✅ Lace: ' + addresses[0];
+        } catch {
+          alert('❌ Failed to connect to Lace Wallet');
+        }
+      } else {
+        alert('❗ Lace Wallet not found. Please install it.');
+      }
     });
-  }
 
-  // Connect to a wallet by name
-  async function connectWallet(walletName) {
-    if (!detectWallet(walletName)) {
-      alert(`❗ ${walletName} wallet not found. Please install it.`);
-      return null;
-    }
-    try {
-      const api = await window.cardano[walletName].enable();
-      const addresses = await api.getUsedAddresses();
-      walletAddressEl.textContent = `✅ ${walletName} Connected: ${addresses[0]}`;
-      return api;
-    } catch (err) {
-      alert(`❌ Failed to connect to ${walletName} wallet`);
-      console.error(err);
-      return null;
-    }
-  }
+    // 🔗 Connect VESPR Wallet
+    document.getElementById('connect-vespr-btn').addEventListener('click', async () => {
+      if (window.cardano && window.cardano.vespr) {
+        try {
+          const api = await window.cardano.vespr.enable();
+          const addresses = await api.getUsedAddresses();
+          walletAddressEl.textContent = '✅ VESPR: ' + addresses[0];
+        } catch {
+          alert('❌ Failed to connect to VESPR Wallet');
+        }
+      } else {
+        alert('❗ VESPR Wallet not found. Please install it.');
+      }
+    });
 
-  // Connect Lace wallet button
-  document.getElementById('connect-lace-btn').addEventListener('click', async () => {
-    await connectWallet('lace');
-  });
+    // 🧾 Submit identity registration to backend
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const identity = document.getElementById('identity').value;
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identity })
+      });
+      const data = await res.json();
+      alert('✅ ' + data.message);
+    });
 
-  // Connect VESPR wallet button
-  document.getElementById('connect-vespr-btn').addEventListener('click', async () => {
-    await connectWallet('vespr');
-  });
-
-  // Optionally show available wallets on load
-  window.addEventListener('load', () => {
-    const wallets = getAvailableWallets();
-    if (wallets.length === 0) {
-      walletAddressEl.textContent = '⚠️ No Cardano wallets detected on this device/browser.';
-    } else {
-      walletAddressEl.textContent = `🟢 Wallets detected: ${wallets.join(', ')}`;
-    }
-  });
-</script>
+    // 🛡️ Submit ZK proof to backend
+    document.getElementById('verify-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const proof = document.getElementById('proof').value;
+      const res = await fetch('/api/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ proof })
+      });
+      const data = await res.json();
+      alert('✅ ' + data.message);
+    });
+  </script>
+</body>
+</html>
