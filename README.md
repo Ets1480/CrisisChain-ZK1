@@ -1,44 +1,64 @@
-# 🛡️ CrisisChain-ZK – Zero-Knowledge Aid Distribution on Midnight & Cardano
-
-**Submission for:** Midnight Data-Protection Challenge  
-**Alternate Track Compatibility:** Cardano (Aiken, VESPR)
+ # CrisisChain Project
 
 ---
 
-## 🌍 Overview
+## Version 1: CrisisChain-ZK (Midnight zkVM)
 
-**CrisisChain-ZK** is a decentralized application (DApp) designed to distribute humanitarian aid transparently and securely using **zero-knowledge proofs (ZKPs)**. Built for the African context, it enables verified users to prove their eligibility without revealing private identity data.
+### Overview
 
-This project supports deployment on both **Midnight** (using Compact smart contracts and Lace Wallet) and **Cardano** (using VESPR wallet and Plutus/Aiken), ensuring broad ecosystem compatibility.
+CrisisChain-ZK is a decentralized aid distribution platform leveraging zero-knowledge proofs (ZKPs) and Midnight’s zkVM smart contracts. It enables secure, privacy-preserving identity verification and automated aid claim validation.
 
----
+### Features
 
-## 🎯 Core Features
+- Privacy-first identity validation with zero-knowledge proofs  
+- Fraud-resistant smart contract automation  
+- Transparent and tamper-proof blockchain audit trails  
+- Integration with Lace Wallet for secure signing  
+- Backend API built with Express and MongoDB  
+- React frontend with a user-friendly dashboard  
 
-- ✅ **ZK Identity Verification** – Users prove identity without exposing it
-- 🔐 **Token-Based Claim System** – Enables secure aid claims via identity hashes
-- 🧠 **Midnight Smart Contract** – Written in Compact with zkproof support
-- 🔗 **Lace & VESPR Wallet Support** – Connect via CIP-30 for transactions
-- 🌐 **Next.js Frontend** – With mobile-first soft-pink UI
-- ⚙️ **API Handlers** – `register.js` and `verify.js` simulate identity hashing and proof checks
+### Technology Stack
 
----
-
-## 🧱 Architecture
-
-| Component        | Technology                         |
-|------------------|-------------------------------------|
-| Smart Contract   | Midnight Compact / Cardano Aiken    |
-| Frontend         | Next.js + Tailwind CSS              |
-| API Backend      | Node.js (Express or Vercel API)     |
-| Wallets          | Lace (Midnight), VESPR (Cardano)    |
-| ZK Proof         | Simulated (Poseidon/SHA256 planned) |
+| Component          | Technology                    |
+|--------------------|------------------------------|
+| Smart Contracts     | Midnight Compact Language     |
+| Blockchain         | Midnight zkVM                 |
+| Wallet             | Lace Wallet                   |
+| Backend            | Node.js, Express, MongoDB     |
+| Frontend           | React.js                     |
+| Zero-Knowledge Proofs | Custom zk circuits          |
 
 ---
 
-## 🛠 Setup Instructions
+## Version 2: CrisisChain (Cardano)
 
-1. **Clone the repository**
-```bash
-git clone https://github.com/Ets1480/crisischain-zk.git
-cd crisischain-zk
+### Overview
+
+CrisisChain is a decentralized application built on the Cardano blockchain to improve transparency and trust in aid distribution. It uses Plutus smart contracts, wallet integration, and a user-friendly interface for automated claim verification.
+
+### Features
+
+- Smart contract-based claim processing using Plutus  
+- Transparent and immutable blockchain records  
+- Wallet integration with VESPR Wallet  
+- Backend built with Node.js, Express, and MongoDB  
+- React and Next.js frontend  
+
+### Technology Stack
+
+| Component         | Technology                    |
+|-------------------|------------------------------|
+| Smart Contracts    | Cardano Plutus                |
+| Blockchain        | Cardano                      |
+| Wallet            | VESPR Wallet                 |
+| Backend           | Node.js, Express, MongoDB     |
+| Frontend          | React.js, Next.js             |
+
+---
+
+## Installation & Running Locally
+
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/yourusername/crisischain.git
+   cd crisischain
