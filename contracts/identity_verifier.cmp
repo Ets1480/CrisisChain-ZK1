@@ -9,23 +9,24 @@ contract IdentityVerifier {
     known_hashes[hash(field("refugee001"))] = true;
   }
 
+  // ✅ PUBLIC: Anyone can register their identity
   public function register_identity(user_id: field) {
-    // Restrict this function to only the contract deployer
-    require(caller() == owner, "Unauthorized");
     let hash_id = hash(user_id);
     known_hashes[hash_id] = true;
   }
 
+  // ✅ ZK Proof Verification
   public function verify_proof(public_hash: field, zk_proof: zkproof) -> bool {
-    // FIXED: Prevent infinite recursion by calling real ZK verifier function
     require(verify_identity_proof(zk_proof, public_hash), "Invalid proof");
     return known_hashes[public_hash];
   }
 
+  // 🧾 View the contract owner's address
   public function get_owner() -> address {
     return owner;
   }
 
+  // 🧠 Check if a hash is registered
   public function is_known(hash_val: field) -> bool {
     return known_hashes[hash_val];
   }
